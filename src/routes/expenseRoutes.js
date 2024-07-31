@@ -1,19 +1,14 @@
 const Express = require('express');
 const Router = Express.Router();
+const expenseController = require('../controllers/expenseController');
 
 // Route for adding new expenses
-Router.post('/', (req, res) => {
-    res.send('Add expense route');
-});
+Router.post('/', expenseController.addExpense);
 
 // Route for getting individual user expenses
-Router.get('/user/:userId', (req, res) => {
-    res.send(`Get expenses for user ID: ${req.params.userId}`);
-});
+Router.get('/user/:Id', expenseController.getUserExpenses);
 
 // Route for getting overall expenses
-Router.get('/', (req, res) => {
-    res.send('Get overall expenses');
-});
+Router.get('/', expenseController.getAllExpense);
 
 module.exports = Router;

@@ -39,8 +39,8 @@ exports.createUser = async (req, res) => {
             },
             token,
         });
-    } catch(error){
-        res.status(500).json({ message: 'Sorry! this occurred from our side, please try again later.', error: error.message });
+    } catch(err){
+        res.status(500).json({ message: 'Sorry! this occurred from our side, please try again later.', error: err.message });
     }
 };
 
@@ -54,7 +54,7 @@ exports.getUserDetails = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
         res.status(200).json({ user });
-    } catch(error){
-        res.status(200).json({ message: 'Sorry! this occurred from our side, please try again later.', error: error.message });
+    } catch(err){
+        res.status(200).json({ message: 'Sorry! this occurred from our side, please try again later.', error: err.message });
     }
 };

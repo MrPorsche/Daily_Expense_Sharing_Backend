@@ -35,4 +35,4 @@ const ExpenseROUTES = require('./routes/expenseRoutes');
 
 // Routes API
 App.use('/api/users', UserROUTES);
-// App.use('/api/users', ExpenseROUTES);
+App.use('/api/expenses', ExpenseROUTES);
