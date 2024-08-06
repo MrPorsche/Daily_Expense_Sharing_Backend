@@ -1,5 +1,8 @@
 const Expense = require('../models/Expense');
 const User = require('../models/User');
+const { Parser } = require('json2csv');
+const FS = require('fs');
+const Path = require('path');
 
 exports.addExpense = async (req, res) => {
     try {
@@ -36,5 +39,34 @@ exports.getAllExpense = async (req, res) => {
         res.json(allExpenses)
     } catch(err){
         res.status(500).json({ message: 'Sorry! this occurred from our side, please try again later.', error: err.message });
+    }
+};
+
+exports.generateBalanceSheet = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if(!user){
+            return res.status(404).json({ message: 'User not registered!' });
+        }
+
+        const Expenses = await Expense.find({ participant: { $elemMatch: { user: userId } } });
+        const Fields = [ 'description', 'amount', 'date', 'participants'];
+        const Opts = { Fields };
+        const parser = new Parser(Opts);
+        const CSV = parser.parse(Expenses);
+
+        const filePath = Path.join(__dirname, `../../downloads/balance_sheet_${userId}.csv`);
+        FS.writeFileSync(filePath, CSV);
+
+        res.download(filePath, `balance_sheet_${userId}.csv`, (err) => {
+            if (err){
+                res.status(500).json({ message: 'Sorry, can not download the file now. Please try again!' });
+            }
+            FS.unlinkSync(filePath);
+        });
+    } catch(err){
+        res.status(500).json({ message: 'Sorry! this occurred from our side, please try again later.', error: err.message  });
     }
 };

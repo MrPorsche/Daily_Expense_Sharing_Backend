@@ -2,7 +2,16 @@ const Express = require('express');
 const Cors = require('cors');
 const Mongoose = require('mongoose');
 const DotENV = require('dotenv');
+const FS = require('fs');
+const Path = require('path');
 const PORT = process.env.PORT || 5000;
+
+
+// creating downloads directory
+const Downloads = Path.join(__dirname, 'downloads');
+if (!FS.existsSync(Downloads)){
+    FS.mkdirSync(Downloads);
+}
 
 DotENV.config();
 
@@ -32,6 +41,7 @@ Mongoose.connect(MongoDB_URI, {
 // Importing Routes
 const UserROUTES = require('./routes/userRoutes');
 const ExpenseROUTES = require('./routes/expenseRoutes');
+const path = require('path');
 
 // Routes API
 App.use('/api/users', UserROUTES);

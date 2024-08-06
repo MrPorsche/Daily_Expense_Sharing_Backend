@@ -11,4 +11,7 @@ Router.get('/user/:Id', expenseController.getUserExpenses);
 // Route for getting overall expenses
 Router.get('/', expenseController.getAllExpense);
 
+// Route for downloading balance sheet of an individual
+Router.get('/balance-sheet/:userId', expenseController.generateBalanceSheet);
+
 module.exports = Router;
