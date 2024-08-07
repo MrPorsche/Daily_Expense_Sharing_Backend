@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 
 // creating downloads directory
-const Downloads = Path.join(__dirname, 'downloads');
+const Downloads = Path.join(__dirname, '../downloads');
 if (!FS.existsSync(Downloads)){
     FS.mkdirSync(Downloads);
 }

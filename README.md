@@ -29,3 +29,77 @@ A backend service for managing daily expenses and sharing them among users. Feat
     And finally run the application with below prompt
     ```sh
     npm run dev
+
+6.  **Test Unit**
+    
+    Use POSTMAN for testing!
+
+    once you get the server running, fire up POSTMAN and run below tests..,
+
+    1.  **Create User**
+
+        * Create a new request,
+        * Set method as `POST`,
+        * Use below URL:
+            `http://localhost:5000/api/users`,
+        * Below in `Body` tab, select `raw` and then    select `JSON` and use data in below format..,
+            {
+                "name": "John Doe",
+                "email": "john.doe@example.com",
+                "password": "yourpassword",
+                "mobile": "1234567890"
+            }, you can change the details as you like.
+        * Lastly, click `Send` to see the result.
+
+    2. **Get User Detail**
+
+        * Again, create a new request,
+        * Set method as `GET` (which is also a default),
+        * Use below URL:
+            `http://localhost:5000/api/users/<user_id>`
+            and replace `<user_id>` with an actual ID generated while running Test 1.
+        * And click `Send` to see the result.
+    
+    3. **Add Expense**
+
+        * New Request,
+        * Method `POST`,
+        * URL:
+            `http://localhost:5000/api/expenses`,
+        * Below in `Body` tab, select `raw` and then    select `JSON` and use data in below format..,
+            {
+                "description": "Dinner",
+                "amount": 100,
+                "splitMethod": "equal",
+                "participants": [
+                    { "userId": "<user_id1>" },
+                    { "userId": "<user_id2>" }
+                ]
+            }, make sure to create one more user.
+        * And `Send`.
+    
+    4. **Get User Expense**
+
+        * New Request,
+        * Method `GET`,
+        * URL:
+            `http://localhost:5000/api/expenses/user/<user_id>`
+            make sure to replace `<user_id>` with an actual ID.
+        * `SEND`
+
+    5. **Get All Expenses**
+
+        * New Request,
+        * Method `GET`,
+        * URL:
+            `http://localhost:5000/api/expenses`
+        * `SEND`
+    
+    6. **Generate Balance Sheet**
+
+        * New Request,
+        * Method `GET`,
+        * URL:
+            `http://localhost:5000/api/expenses/balance-sheet/:userId`
+            remember to replace :userId with actual user ID.
+        * `SEND`
